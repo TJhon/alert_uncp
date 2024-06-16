@@ -63,6 +63,8 @@ def pretty_content(content, url, page, relation, faculty):
     """
 
 
+send_email("hola", "sdf")
+
 print(APP_PASSWORD)
 print(sender)
 print(receiver)

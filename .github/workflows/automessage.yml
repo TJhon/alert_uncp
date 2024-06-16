@@ -10,25 +10,30 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
 jobs:
-  BuildJB:
+  ActualizarCorreo:
     runs-on: ubuntu-22.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: environ
+        uses: actions/checkout@v2
+
+      - name: Instalar chromium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+          sudo apt-get install chromium-driver
+          pip install selenium
+
       - id: Python_pip
-        name: Python dependencies
+        name: setup python
         uses: actions/setup-python@v2
         with:
           python-version: "3.10"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - name: Instalar chromium
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          sudo apt-get install chromium-chromedriver
+
       # - name: Run script
       - name: Ejecuta script Python con python-dotenv
         env:
@@ -36,8 +41,8 @@ jobs:
           MAIL_SENDER: ${{ secrets.MAIL_SENDER }}
           MAIL_RECEIVER: ${{ secrets.MAIL_RECEIVER }}
         run: |
-          python3 US/main.py
-        # python3 US/send_mail.py
+          python3 US/send_mail.py
+        # python3 US/main.py
 
       # Push in main
 
@@ -49,5 +54,5 @@ jobs:
           git commit -m "Update"
           git push origin main
         env:
-          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
           username: github-actions
