@@ -1,10 +1,10 @@
 name: Actualizar
 
 on:
-  # push:
-  #   branches: ["main"]
+  push:
+    branches: ["cron"]
   schedule:
-    - cron: "49 8 * * *" # Ejecutar todos los días a las 12:00 UTC
+    - cron: "49 8 * * *"
 
 jobs:
   UpdateMail:
