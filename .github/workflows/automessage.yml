@@ -27,7 +27,7 @@ jobs:
           pip install selenium
 
       - id: Python_pip
-        name: setup python
+        name: Setup python
         uses: actions/setup-python@v2
         with:
           python-version: "3.10"
@@ -42,17 +42,18 @@ jobs:
           MAIL_RECEIVER: ${{ secrets.MAIL_RECEIVER }}
         run: |
           python3 US/send_mail.py
-        # python3 US/main.py
+          python3 US/main.py
 
       # Push in main
 
       - id: commit
         name: Commit files
-        run: git config --local user.name action-user
+        run: |
+          git config --local user.name action-user
           git config --local user.email "actions@github.com"
-          git add -A
-          git commit -m "Update"
-          git push origin main
+        # git add -A
+        # git commit -m "Update"
+        # git push origin main
         env:
           REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
           username: github-actions

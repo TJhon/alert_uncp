@@ -63,9 +63,5 @@ def pretty_content(content, url, page, relation, faculty):
     """
 
 
-send_email("hola", "sdf")
-
-print(APP_PASSWORD)
-print(sender)
-print(receiver)
-# def join_content()
+if __name__ == "__main__":
+    send_email("hola", "sdf")
