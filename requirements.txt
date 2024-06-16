@@ -1,6 +1,6 @@
 pypdf
 pandas==1.5.3
-numpy
+numpy==1.23.5
 requests
 secure-smtplib
 python-dotenv
