@@ -9,6 +9,8 @@ on:
 jobs:
   UpdateMail:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Chequear el código
         uses: actions/checkout@v2
