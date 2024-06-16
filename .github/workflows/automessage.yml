@@ -16,27 +16,24 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: environ
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Instalar chromium
-        with:
-          cache: "chromium"
         run: |
           sudo apt-get update
           sudo apt-get install -y wget unzip
 
-          # Download and install the specific version of Chrome
-          CHROME_VERSION="125.0.6422.141"
+          # Descargar e instalar la versión específica de Google Chrome
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-          # Download the corresponding chromedriver
-          CHROMEDRIVER_VERSION="125.0.6422.141"
           wget -N https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.60/win64/chromedriver-win64.zip
           unzip chromedriver_linux64.zip
           sudo mv -f chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
+
+          # Instalar las dependencias de Python
           pip install selenium
 
       - id: Python_pip
