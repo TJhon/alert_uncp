@@ -52,10 +52,11 @@ def send_email(
 Header = "Contenido encontrado"
 
 
-def pretty_content(content, url, page, relation, faculty):
+def pretty_content(content, fecha, url, page, relation, faculty):
 
     return f"""
     Econtrado: {content}
+    Fecha: {fecha},
     URL: {url}
     Pagina: {page}
     Relación: {relation}

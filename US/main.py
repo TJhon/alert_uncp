@@ -12,19 +12,21 @@ targets = ["flores r", "jhon kevin"]
 
 verify_new_docs()
 data = load_data_pkl()
+
 names_pdf = data["name_pdf"]
 pdf_url = data["url_pdf"]
 pdfs_path = [f"{MAIN_DIR_PDF}/{name}.pdf" for name in names_pdf]
+date_values = data["dates"]
 
 
-def search_user_pdf(pdf_path, targets, url_pdf):
+def search_user_pdf(pdf_path, targets, url_pdf, date):
     reader = pdf(pdf_path)
     pages = reader.pages
     last_relation = ""
     last_fac = ""
     # found_in = {}
     content = []
-    url = []
+    url, dates = [], []
     relations, pages_nu, facs, pdfs = [], [], [], []
     for page in pages:
         text = page.extract_text()
@@ -39,6 +41,7 @@ def search_user_pdf(pdf_path, targets, url_pdf):
                 if target.lower() in line.lower():
                     pdfs.append(pdf_path)
                     url.append(url_pdf)
+                    dates.append(date)
                     pages_nu.append(page.page_number + 1)
                     relations.append(last_relation)
                     facs.append(last_fac)
@@ -51,17 +54,20 @@ def search_user_pdf(pdf_path, targets, url_pdf):
             "Page": pages_nu,
             "Relation": relations,
             "Faculty": facs,
+            "fecha": dates,
         }
     ).drop_duplicates()
 
 
 found_text = pd.DataFrame()
 
-for pdf_path, url in zip(pdfs_path, pdf_url):
+for pdf_path, url, date in zip(pdfs_path, pdf_url, date_values):
     # print(pdf_path)
-    found = search_user_pdf(pdf_path, targets, url)
+    found = search_user_pdf(pdf_path, targets, url, date)
     if len(found) > 0:
-        found_text = pd.concat((found_text, found))
+        found_text = pd.concat((found_text, found)).sort_values(
+            "fecha", ascending=False
+        )
 
 content = "Contenido encontrado\n"
 
@@ -70,6 +76,7 @@ if len(found_text) > 0:
     for index, row in found_text.iterrows():
         content_i = pretty_content(
             row["Content"],
+            row["fecha"],
             row["PDF"],
             row["Page"],
             row["Relation"],

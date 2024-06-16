@@ -20,8 +20,8 @@ def save_data_pkl(data):
         pickle.dump(data, f)
 
 
-def load_data_pkl():
-    with open(last_data_path, "rb") as f:
+def load_data_pkl(path=last_data_path):
+    with open(path, "rb") as f:
         last_data = pickle.load(f)
     return last_data
 
