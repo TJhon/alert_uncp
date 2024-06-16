@@ -30,7 +30,12 @@ jobs:
           sudo apt-get install -y chromium-browser
           sudo apt-get install chromium-chromedriver
 
-      - name: Run script
+      # - name: Run script
+      - name: Ejecuta script Python con python-dotenv
+        env:
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+          MAIL_SENDER: ${{ secrets.MAIL_SENDER }}
+          MAIL_RECEIVER: ${{ secrets.MAIL_RECEIVER }}
         run: |
           python3 US/send_mail.py
         # python3 US/main.py
