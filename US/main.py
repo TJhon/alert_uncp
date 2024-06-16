@@ -78,3 +78,6 @@ if len(found_text) > 0:
         content += content_i
     print("Sending email")
     send_email(content, f"Busqueda de UNCP - {now}")
+
+    with open(f"./log/log_{now}.txt", "w") as file:
+        file.write(content)

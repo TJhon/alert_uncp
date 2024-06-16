@@ -61,7 +61,3 @@ def pretty_content(content, url, page, relation, faculty):
     Relación: {relation}
     Facultad: {faculty}
     """
-
-
-if __name__ == "__main__":
-    send_email("hola", "sdf")
