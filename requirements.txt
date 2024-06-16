@@ -1,5 +1,5 @@
 pypdf
-pandas
+pandas==1.5.3
 numpy
 requests
 secure-smtplib
