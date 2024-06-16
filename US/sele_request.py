@@ -8,10 +8,16 @@ from utils import download_pdf, save_data_pkl, load_data_pkl
 MAIN_URL = "https://resoluciones.uncp.edu.pe/documentos/R-EC"
 last_data_path = "./data/last_data.pkl"
 
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.binary_location = "/usr/bin/chromium-browser"
+
 
 def get_actual_data():
 
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     driver.get(MAIN_URL)
 
     time.sleep(1)
