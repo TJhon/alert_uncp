@@ -63,4 +63,7 @@ def pretty_content(content, url, page, relation, faculty):
     """
 
 
+print(APP_PASSWORD)
+print(sender)
+print(receiver)
 # def join_content()
