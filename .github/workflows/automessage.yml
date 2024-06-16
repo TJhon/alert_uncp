@@ -24,17 +24,36 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget unzip
 
-          # Descargar e instalar la versión específica de Google Chrome
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
+          CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
 
-          wget -N https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.60/win64/chromedriver-win64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv -f chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
+          SELENIUM_STANDALONE_VERSION=3.13.0
+          SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
 
-          # Instalar las dependencias de Python
-          pip install selenium
+          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+          sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get -y update
+          sudo apt-get -y install chromium-browser
+
+          # Install Chrome.
+          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+          sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get -y update
+          sudo apt-get -y install chromium-browser
+
+          # Install ChromeDriver.
+          wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+          unzip ~/chromedriver_linux64.zip -d ~/
+          rm ~/chromedriver_linux64.zip
+          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+          sudo chown root:root /usr/local/bin/chromedriver
+          sudo chmod 0755 /usr/local/bin/chromedriver
+
+
+          # Install Selenium.
+          wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -P ~/
+          sudo mv -f ~/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar /usr/local/bin/selenium-server-standalone.jar
+          sudo chown root:root /usr/local/bin/selenium-server-standalone.jar
+          sudo chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
       - id: Python_pip
         name: Setup python
