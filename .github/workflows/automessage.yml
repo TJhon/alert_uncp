@@ -4,7 +4,7 @@ on:
   # push:
   #   branches: ["cron"]
   schedule:
-    - cron: "49 8 * * *"
+    - cron: "0 10 * * *"
 
 jobs:
   UpdateMail:
