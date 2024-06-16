@@ -1,0 +1,7 @@
+pypdf
+pandas
+numpy
+requests
+secure-smtplib
+python-dotenv
+selenium
