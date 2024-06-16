@@ -1,0 +1,43 @@
+name: auto_build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
+jobs:
+  BuildJB:
+    runs-on: ubuntu-22.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: Python_pip
+        name: Python dependencies
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+
+      - name: Build and Test
+        run: |
+          python3 US/main.py
+
+      # Push in main
+
+      - id: commit
+        name: Commit files
+        run: git config --local user.name action-user
+          git config --local user.email "actions@github.com"
+          git add -A
+          git commit -m "Update"
+          git push origin main
+        env:
+          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          username: github-actions
