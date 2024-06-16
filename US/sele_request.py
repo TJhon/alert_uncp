@@ -1,12 +1,15 @@
 from selenium import webdriver
-import time, pandas as pd, numpy as np
+import time, pandas as pd, numpy as np, os
 from selenium.webdriver.common.by import By
 
-import pickle
+from dotenv import load_dotenv
 from utils import download_pdf, save_data_pkl, load_data_pkl
 
+load_dotenv()
 MAIN_URL = "https://resoluciones.uncp.edu.pe/documentos/R-EC"
 last_data_path = "./data/last_data.pkl"
+local = os.environ.get("LOCAL")
+
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
@@ -16,8 +19,10 @@ options.binary_location = "/usr/bin/chromium-browser"
 
 
 def get_actual_data():
-
-    driver = webdriver.Chrome(options=options)
+    if local == "1":
+        driver = webdriver.Chrome()
+    else:
+        driver = webdriver.Chrome(options=options)
     driver.get(MAIN_URL)
 
     time.sleep(1)
@@ -54,9 +59,9 @@ def verify_new_docs():
     to_dowload_i = np.where(exists)[0]
 
     not_downloaded = data.iloc[to_dowload_i]
-    print(not_downloaded)
     if len(not_downloaded) > 0:
         # print("download new data")
+        print(not_downloaded)
         download_pdf_from_data(not_downloaded)
 
     if any(exists):
@@ -72,13 +77,8 @@ def download_pdf_from_data(data: pd.DataFrame, name="dates", url="url_pdf"):
 
 
 if __name__ == "__main__":
-    # get_actual_data().to_parquet("./data/actual.parquet")
     # data = load_data_pkl()
-    save_data_pkl(pd.DataFrame({"dates": []}))
-    # print("dummy_data")
-    # d_data = get_actual_data().sample(9)
-    # print(d_data)
-    # download_pdf_from_data(d_data)
-    # print("verify data")
+    # a = data.sample(4)
+    # save_data_pkl(a)
     new = verify_new_docs()
     print(new)

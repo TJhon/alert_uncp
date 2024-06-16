@@ -8,7 +8,7 @@ from utils import MAIN_DIR_PDF, load_data_pkl
 from send_mail import pretty_content, send_email
 from sele_request import verify_new_docs
 
-targets = ["flores ro", "jhon kevin"]
+targets = ["flores r", "jhon kevin"]
 
 verify_new_docs()
 data = load_data_pkl()
@@ -76,4 +76,5 @@ if len(found_text) > 0:
             row["Faculty"],
         )
         content += content_i
+    print("Sending email")
     send_email(content, f"Busqueda de UNCP - {now}")
