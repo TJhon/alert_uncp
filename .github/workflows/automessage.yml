@@ -29,13 +29,13 @@ jobs:
           SELENIUM_STANDALONE_VERSION=3.13.0
           SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
 
-          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub 
           sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get -y update
           sudo apt-get -y install chromium-browser
 
           # Install Chrome.
-          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+          sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub 
           sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get -y update
           sudo apt-get -y install chromium-browser
