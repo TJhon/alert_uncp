@@ -8,7 +8,7 @@ from utils import MAIN_DIR_PDF, load_data_pkl
 from send_mail import pretty_content, send_email
 from sele_request import verify_new_docs
 
-targets = ["flores r", "jhon kevin"]
+targets = ["flores ro", "jhon kevin", "rojas jho", "kevin flores"]
 
 verify_new_docs()
 data = load_data_pkl()
