@@ -2,7 +2,7 @@ name: Actualizar
 
 on:
   push:
-    branches: ["cron"]
+    branches: ["main"]
   schedule:
     - cron: "0 10 * * *"
 
